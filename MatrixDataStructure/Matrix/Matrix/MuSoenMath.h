@@ -1,25 +1,18 @@
 #pragma once
-//#include <math.h>
+#include <math.h>
 #include <iostream>
 
-//#define PI 3.14
+#define PI 3.14159265
 
-//vec3(float 3*1) -> 2차원좌표 + 동차좌표
-//mat3(float 3*3) -> 2차원 행렬
-
-//double rad(int numb) {
-//	return numb * (PI / 180);
-//};
-
-class mat3 {
+class mat3 { //mat3 클래스 생성
 public :
-	float mat[3][3];
+	float mat[3][3]; //float형 3x3 행렬
 
 public:
-	mat3() {
+	mat3() { //생성자
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 3; ++j) {
-				mat[i][j] = 0;
+				mat[i][j] = 0; //멤버 변수 초기화
 			}
 		}
 	}
@@ -32,56 +25,38 @@ public:
 		}
 	}*/
 
-	/*mat3 operator*(mat3& m) {
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 3; ++j) {
-				mat[i][j] *= m.mat[i][j];
-			}
-		}
-	}*/
+	//mat3 operator*(mat3& m) { //연산자 오버로딩
+	//	for (int i = 0; i < 3; ++i) {
+	//		for (int j = 0; j < 3; ++j) {
+	//			mat[i][j] *= m.mat[i][j];
+	//		}
+	//	}
+	//}
 };
 
-class vec3 {
+class vec3 { //vec3 클래스 생성
 public:
-	float vec[3];
+	float vec[3]; //float형 3x1 좌표(벡터)
 
 public:
-	vec3() {
-		for (int i = 0; i < 3; i++) {
-			vec[i] = 0;
-		}
+	vec3() { //생성자 
+		vec[0] = 0;
+		vec[1] = 0;
+		vec[2] = 1; //동차좌표
 	}
-
-	vec3 operator*(mat3& m) {
+	
+	vec3 operator*(mat3 m) { //연산자 오버로딩
 		vec3 v;
-		
+		// Vector와 Matrix 행렬 곱하기
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 3; ++j) {
-				m.mat[i][j] *= v.vec[i];
+				v.vec[i] += m.mat[i][j] * v.vec[j];
 			}
 		}
 
-		return v;
+		v.vec[2] = 1;
+
+		return v; //저장된 값 반환
 	}
 
 };
-
-//mat3::mat3(float Translate, float Rotate, float Scale)
-//{
-//	double num = rad(30);
-//	Translate =
-//		(1, 0, 3,
-//		0, 1, 5,
-//		0, 0, 1);
-//
-//	Rotate =
-//		(cos(num), -sin(num), 0,
-//		sin(num), cos(num), 0,
-//		0, 0, 1	);
-//
-//	Scale =
-//		(2, 0, 0,
-//		0, 2, 0,
-//		0, 0, 1
-//			);
-//}
